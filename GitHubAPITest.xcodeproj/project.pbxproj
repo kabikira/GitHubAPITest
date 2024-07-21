@@ -19,6 +19,8 @@
 		3B1113212C4A26DD00BA0FD3 /* GitHubRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1113202C4A26DD00BA0FD3 /* GitHubRepository.swift */; };
 		3B1113232C4AC1BB00BA0FD3 /* GitHubAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1113222C4AC1BB00BA0FD3 /* GitHubAPIClient.swift */; };
 		3B1113252C4B9E2800BA0FD3 /* GitHubRepositoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1113242C4B9E2800BA0FD3 /* GitHubRepositoryManager.swift */; };
+		3B11132A2C4CEC9B00BA0FD3 /* GitHubTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1113292C4CEC9B00BA0FD3 /* GitHubTableViewCell.swift */; };
+		3B11132C2C4CECB800BA0FD3 /* GitHubTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B11132B2C4CECB800BA0FD3 /* GitHubTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,8 @@
 		3B1113202C4A26DD00BA0FD3 /* GitHubRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GitHubRepository.swift; path = ../../../../../../../../../Applications/GitHubRepository.swift; sourceTree = "<group>"; };
 		3B1113222C4AC1BB00BA0FD3 /* GitHubAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubAPIClient.swift; sourceTree = "<group>"; };
 		3B1113242C4B9E2800BA0FD3 /* GitHubRepositoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubRepositoryManager.swift; sourceTree = "<group>"; };
+		3B1113292C4CEC9B00BA0FD3 /* GitHubTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubTableViewCell.swift; sourceTree = "<group>"; };
+		3B11132B2C4CECB800BA0FD3 /* GitHubTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GitHubTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,10 +110,10 @@
 			isa = PBXGroup;
 			children = (
 				3B11131F2C4A26C300BA0FD3 /* API */,
+				3B1113262C4CEC2600BA0FD3 /* Model */,
 				3B1112EF2C4A208A00BA0FD3 /* AppDelegate.swift */,
+				3B1113272C4CEC3B00BA0FD3 /* View */,
 				3B1112F12C4A208A00BA0FD3 /* SceneDelegate.swift */,
-				3B1112F32C4A208A00BA0FD3 /* ViewController.swift */,
-				3B1112F52C4A208A00BA0FD3 /* Main.storyboard */,
 				3B1112F82C4A208C00BA0FD3 /* Assets.xcassets */,
 				3B1112FA2C4A208C00BA0FD3 /* LaunchScreen.storyboard */,
 				3B1112FD2C4A208C00BA0FD3 /* Info.plist */,
@@ -139,9 +143,35 @@
 			children = (
 				3B1113202C4A26DD00BA0FD3 /* GitHubRepository.swift */,
 				3B1113222C4AC1BB00BA0FD3 /* GitHubAPIClient.swift */,
-				3B1113242C4B9E2800BA0FD3 /* GitHubRepositoryManager.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		3B1113262C4CEC2600BA0FD3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3B1113242C4B9E2800BA0FD3 /* GitHubRepositoryManager.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3B1113272C4CEC3B00BA0FD3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3B1113282C4CEC5400BA0FD3 /* Cell */,
+				3B1112F32C4A208A00BA0FD3 /* ViewController.swift */,
+				3B1112F52C4A208A00BA0FD3 /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3B1113282C4CEC5400BA0FD3 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				3B1113292C4CEC9B00BA0FD3 /* GitHubTableViewCell.swift */,
+				3B11132B2C4CECB800BA0FD3 /* GitHubTableViewCell.xib */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,6 +280,7 @@
 			files = (
 				3B1112FC2C4A208C00BA0FD3 /* LaunchScreen.storyboard in Resources */,
 				3B1112F92C4A208C00BA0FD3 /* Assets.xcassets in Resources */,
+				3B11132C2C4CECB800BA0FD3 /* GitHubTableViewCell.xib in Resources */,
 				3B1112F72C4A208A00BA0FD3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -275,6 +306,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B11132A2C4CEC9B00BA0FD3 /* GitHubTableViewCell.swift in Sources */,
 				3B1113232C4AC1BB00BA0FD3 /* GitHubAPIClient.swift in Sources */,
 				3B1113212C4A26DD00BA0FD3 /* GitHubRepository.swift in Sources */,
 				3B1112F42C4A208A00BA0FD3 /* ViewController.swift in Sources */,
