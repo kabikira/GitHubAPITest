@@ -9,13 +9,16 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var searchButton: UIButton!
+    @IBOutlet weak var searchButton: UIButton! {
+        didSet {
+            searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
+        }
+    }
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.register(UINib.init(nibName: GitHubTableViewCell.className, bundle: nil), forCellReuseIdentifier: GitHubTableViewCell.className)
-            tableView.delegate = self
             tableView.dataSource = self
         }
     }
@@ -25,9 +28,6 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // searchButtonにアクションを追加
-        searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
     }
 
     @objc func searchButtonTapped() {
@@ -35,25 +35,28 @@ class ViewController: UIViewController {
             print("Username is empty")
             return
         }
+        performSearch(for: username)
+    }
 
-        // 検索中にインジケータを表示
+    func performSearch(for username: String) {
         indicator.startAnimating()
-
         Task {
             do {
                 try await repositoryManager.load(user: username)
-                if let repos = self.repositoryManager.repos {
-                    self.gitHubRepositories = repos
-                    self.tableView.reloadData()
+                if let repos = repositoryManager.repos {
+                    updateUI(with: repos)
                 }
             } catch {
                 print("Failed to load repositories: \(error)")
             }
-            // 検索完了後にインジケータを非表示
-            self.indicator.stopAnimating()
+            indicator.stopAnimating()
         }
     }
 
+    func updateUI(with repositories: [GitHubRepository]) {
+        gitHubRepositories = repositories
+        tableView.reloadData()
+    }
 }
 
 extension ViewController: UITableViewDataSource {
@@ -70,9 +73,5 @@ extension ViewController: UITableViewDataSource {
         cell.configure(gitHubRepository: gitHubRepositories)
         return cell
     }
-}
-
-extension ViewController: UITableViewDelegate {
-
 }
 
