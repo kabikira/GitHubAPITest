@@ -79,3 +79,91 @@ final class GitHubAPITestTests: XCTestCase {
         }
     }
 }
+
+final class ViewControllerTest: XCTestCase {
+
+    var vc: ViewController!
+    var window: UIWindow!
+    var mockClient: MockGitHubAPIClient!
+    var repositoryManager: GitHubRepositoryManager!
+
+    let testRepositories: [GitHubRepository] = [
+        GitHubRepository(id: 1, name: "Repo1", repositoryUrl: "https://github.com/repo1", star: 100),
+        GitHubRepository(id: 2, name: "Repo2", repositoryUrl: "https://github.com/repo2", star: 150),
+        GitHubRepository(id: 3, name: "Repo3", repositoryUrl: "https://github.com/repo3", star: 0),
+    ]
+
+    override func setUp() {
+        super.setUp()
+        mockClient = MockGitHubAPIClient(mockRepositories: testRepositories)
+        repositoryManager = GitHubRepositoryManager(client: mockClient)
+        vc = ViewController.make()
+        vc.repositoryManager = repositoryManager
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window.rootViewController = vc
+        window.makeKeyAndVisible()
+    }
+
+    override func tearDown() {
+        vc = nil
+        window = nil
+        mockClient = nil
+        repositoryManager = nil
+        super.tearDown()
+    }
+
+//    func testSearchButtonTapped() {
+//        vc.searchTextField.text = "kabikira"
+//        vc.searchButton.sendActions(for: .touchUpInside)
+//        XCTAssertTrue(vc.indicator.isAnimating)
+//
+////        XCTAssertEqual(mockClient.requestedUser, "kabikira")
+//
+//
+//    }
+
+    func testSearchButtonTapped() async {
+        await MainActor.run {
+            vc.searchTextField.text = "testUser"
+            vc.searchButton.sendActions(for: .touchUpInside)
+        }
+
+        // 非同期の検索処理が完了するのを待つ
+        try? await Task.sleep(nanoseconds: 500_000_000)  // 0.5 seconds
+
+
+        await MainActor.run {
+            XCTAssertEqual(mockClient.requestedUser, "testUser")
+            XCTAssertEqual(vc.gitHubRepositories.count, testRepositories.count)
+            XCTAssertEqual(vc.gitHubRepositories[0].name, "Repo1")
+            XCTAssertEqual(vc.gitHubRepositories[1].name, "Repo2")
+            XCTAssertEqual(vc.gitHubRepositories[2].name, "Repo3")
+
+            // インジケータが停止していることを確認
+            XCTAssertFalse(vc.indicator.isAnimating)
+        }
+    }
+}
+
+final class ViewControllerTest2: XCTestCase {
+
+    func testSearchButtonTapped() {
+        // 対象のViewControllerを表示させる
+        let vc = ViewController.make()
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        window.rootViewController = vc
+        window.makeKeyAndVisible()
+
+        // サーチボタンをタップ
+        // searchTextFieldに変化があったら
+        // 結果を表示
+
+        vc.searchTextField.text = "kabikira"
+        vc.searchButton.sendActions(for: .touchUpInside)
+        XCTAssertTrue(vc.indicator.isAnimating)
+//        XCTAssertFalse(vc.indicator.isAnimating)
+
+
+
+    }
+}

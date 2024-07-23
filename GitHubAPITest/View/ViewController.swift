@@ -9,6 +9,11 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    static func make() -> ViewController {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        return storyboard.instantiateInitialViewController() as! ViewController
+    }
+
     @IBOutlet weak var searchButton: UIButton! {
         didSet {
             searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
@@ -23,7 +28,7 @@ class ViewController: UIViewController {
         }
     }
 
-    let repositoryManager = GitHubRepositoryManager()
+    var repositoryManager = GitHubRepositoryManager()
     var gitHubRepositories: [GitHubRepository] = []
 
     override func viewDidLoad() {
@@ -31,6 +36,7 @@ class ViewController: UIViewController {
     }
 
     @objc func searchButtonTapped() {
+print("tapされた")
         guard let username = searchTextField.text, !username.isEmpty else {
             print("Username is empty")
             return
@@ -38,13 +44,16 @@ class ViewController: UIViewController {
         performSearch(for: username)
     }
 
+    @MainActor
     func performSearch(for username: String) {
         indicator.startAnimating()
+print("サーチ")
         Task {
             do {
                 try await repositoryManager.load(user: username)
                 if let repos = repositoryManager.repos {
                     updateUI(with: repos)
+print(repos)
                 }
             } catch {
                 print("Failed to load repositories: \(error)")
@@ -53,6 +62,7 @@ class ViewController: UIViewController {
         }
     }
 
+    @MainActor
     func updateUI(with repositories: [GitHubRepository]) {
         gitHubRepositories = repositories
         tableView.reloadData()
