@@ -112,16 +112,6 @@ final class ViewControllerTest: XCTestCase {
         super.tearDown()
     }
 
-//    func testSearchButtonTapped() {
-//        vc.searchTextField.text = "kabikira"
-//        vc.searchButton.sendActions(for: .touchUpInside)
-//        XCTAssertTrue(vc.indicator.isAnimating)
-//
-////        XCTAssertEqual(mockClient.requestedUser, "kabikira")
-//
-//
-//    }
-
     func testSearchButtonTapped() async {
         await MainActor.run {
             vc.searchTextField.text = "testUser"
@@ -134,10 +124,28 @@ final class ViewControllerTest: XCTestCase {
 
         await MainActor.run {
             XCTAssertEqual(mockClient.requestedUser, "testUser")
+            // 返ってくるリポジトリの数
             XCTAssertEqual(vc.gitHubRepositories.count, testRepositories.count)
+
+            // id
+            XCTAssertEqual(vc.gitHubRepositories[0].id, 1)
+            XCTAssertEqual(vc.gitHubRepositories[1].id, 2)
+            XCTAssertEqual(vc.gitHubRepositories[2].id, 3)
+
+            // name
             XCTAssertEqual(vc.gitHubRepositories[0].name, "Repo1")
             XCTAssertEqual(vc.gitHubRepositories[1].name, "Repo2")
             XCTAssertEqual(vc.gitHubRepositories[2].name, "Repo3")
+
+            // repositoryUrl
+            XCTAssertEqual(vc.gitHubRepositories[0].repositoryUrl, "https://github.com/repo1")
+            XCTAssertEqual(vc.gitHubRepositories[1].repositoryUrl, "https://github.com/repo2")
+            XCTAssertEqual(vc.gitHubRepositories[2].repositoryUrl, "https://github.com/repo3")
+
+            // star
+            XCTAssertEqual(vc.gitHubRepositories[0].star, 100)
+            XCTAssertEqual(vc.gitHubRepositories[1].star, 150)
+            XCTAssertEqual(vc.gitHubRepositories[2].star, 0)
 
             // インジケータが停止していることを確認
             XCTAssertFalse(vc.indicator.isAnimating)

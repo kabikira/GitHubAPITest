@@ -44,9 +44,8 @@ class ViewController: UIViewController {
     }
 
     func performSearch(for username: String) {
-        indicator.startAnimating()
-
         Task {
+            setIndicatorAnimating(true)
             do {
                 try await repositoryManager.load(user: username)
                 if let repos = repositoryManager.repos {
@@ -55,6 +54,15 @@ class ViewController: UIViewController {
             } catch {
                 print("Failed to load repositories: \(error)")
             }
+            setIndicatorAnimating(false)
+        }
+    }
+
+    @MainActor
+    func setIndicatorAnimating(_ animating: Bool) {
+        if animating {
+            indicator.startAnimating()
+        } else {
             indicator.stopAnimating()
         }
     }
