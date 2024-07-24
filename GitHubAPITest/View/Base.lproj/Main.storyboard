@@ -50,23 +50,21 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QhE-DR-xks">
                                         <rect key="frame" x="0.0" y="56" width="414" height="792"/>
                                         <subviews>
-                                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="LIG-bE-0rG">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="792"/>
-                                            </activityIndicatorView>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tDu-SO-x7Q">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="792"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <color key="separatorColor" red="0.60392156860000001" green="0.60392156860000001" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
                                             </tableView>
+                                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="LIG-bE-0rG">
+                                                <rect key="frame" x="188.5" y="377.5" width="37" height="37"/>
+                                            </activityIndicatorView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="tDu-SO-x7Q" firstAttribute="top" secondItem="QhE-DR-xks" secondAttribute="top" id="Da9-ZY-m1u"/>
-                                            <constraint firstAttribute="bottom" secondItem="LIG-bE-0rG" secondAttribute="bottom" id="S4A-1b-yTR"/>
+                                            <constraint firstItem="LIG-bE-0rG" firstAttribute="centerX" secondItem="QhE-DR-xks" secondAttribute="centerX" id="OSt-dr-yLH"/>
                                             <constraint firstItem="tDu-SO-x7Q" firstAttribute="leading" secondItem="QhE-DR-xks" secondAttribute="leading" id="Ve0-8z-6yS"/>
-                                            <constraint firstItem="LIG-bE-0rG" firstAttribute="leading" secondItem="QhE-DR-xks" secondAttribute="leading" id="XOL-Dt-NTz"/>
-                                            <constraint firstItem="LIG-bE-0rG" firstAttribute="top" secondItem="QhE-DR-xks" secondAttribute="top" id="YqT-Pz-cbT"/>
-                                            <constraint firstAttribute="trailing" secondItem="LIG-bE-0rG" secondAttribute="trailing" id="beO-YL-Rjx"/>
+                                            <constraint firstItem="LIG-bE-0rG" firstAttribute="centerY" secondItem="QhE-DR-xks" secondAttribute="centerY" id="daR-rC-1WO"/>
                                             <constraint firstAttribute="bottom" secondItem="tDu-SO-x7Q" secondAttribute="bottom" id="fNe-jL-Rqg"/>
                                             <constraint firstAttribute="trailing" secondItem="tDu-SO-x7Q" secondAttribute="trailing" id="u2j-Hd-Ini"/>
                                         </constraints>

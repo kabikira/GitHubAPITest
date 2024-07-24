@@ -35,8 +35,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
     }
 
-    @objc func searchButtonTapped() {
-print("tapされた")
+    @objc func searchButtonTapped() {        
         guard let username = searchTextField.text, !username.isEmpty else {
             print("Username is empty")
             return
@@ -44,16 +43,14 @@ print("tapされた")
         performSearch(for: username)
     }
 
-    @MainActor
     func performSearch(for username: String) {
         indicator.startAnimating()
-print("サーチ")
+
         Task {
             do {
                 try await repositoryManager.load(user: username)
                 if let repos = repositoryManager.repos {
                     updateUI(with: repos)
-print(repos)
                 }
             } catch {
                 print("Failed to load repositories: \(error)")

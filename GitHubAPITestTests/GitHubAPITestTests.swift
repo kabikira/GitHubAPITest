@@ -130,7 +130,7 @@ final class ViewControllerTest: XCTestCase {
 
         // 非同期の検索処理が完了するのを待つ
         try? await Task.sleep(nanoseconds: 500_000_000)  // 0.5 seconds
-
+        
 
         await MainActor.run {
             XCTAssertEqual(mockClient.requestedUser, "testUser")
