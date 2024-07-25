@@ -93,6 +93,7 @@ final class ViewControllerTest: XCTestCase {
         GitHubRepository(id: 3, name: "Repo3", repositoryUrl: "https://github.com/repo3", star: 0),
     ]
 
+    // setUpメソッドは、各テストメソッドの前に呼び出され、テスト環境を初期化します。
     override func setUp() {
         super.setUp()
         mockClient = MockGitHubAPIClient(mockRepositories: testRepositories)
@@ -104,6 +105,7 @@ final class ViewControllerTest: XCTestCase {
         window.makeKeyAndVisible()
     }
 
+    // tearDownメソッドは、各テストメソッドの後に呼び出され、テスト環境をクリーンアップします。
     override func tearDown() {
         vc = nil
         window = nil
@@ -112,7 +114,9 @@ final class ViewControllerTest: XCTestCase {
         super.tearDown()
     }
 
+    // サーチボタンをタップしたときのテスト
     func testSearchButtonTapped() async {
+        // メインスレッドでテキストフィールドにユーザー名を入力し、サーチボタンをタップ
         await MainActor.run {
             vc.searchTextField.text = "testUser"
             vc.searchButton.sendActions(for: .touchUpInside)
@@ -123,6 +127,7 @@ final class ViewControllerTest: XCTestCase {
         
 
         await MainActor.run {
+            // ユーザー名は同じか
             XCTAssertEqual(mockClient.requestedUser, "testUser")
             // 返ってくるリポジトリの数
             XCTAssertEqual(vc.gitHubRepositories.count, testRepositories.count)
@@ -150,28 +155,5 @@ final class ViewControllerTest: XCTestCase {
             // インジケータが停止していることを確認
             XCTAssertFalse(vc.indicator.isAnimating)
         }
-    }
-}
-
-final class ViewControllerTest2: XCTestCase {
-
-    func testSearchButtonTapped() {
-        // 対象のViewControllerを表示させる
-        let vc = ViewController.make()
-        let window = UIWindow(frame: UIScreen.main.bounds)
-        window.rootViewController = vc
-        window.makeKeyAndVisible()
-
-        // サーチボタンをタップ
-        // searchTextFieldに変化があったら
-        // 結果を表示
-
-        vc.searchTextField.text = "kabikira"
-        vc.searchButton.sendActions(for: .touchUpInside)
-        XCTAssertTrue(vc.indicator.isAnimating)
-//        XCTAssertFalse(vc.indicator.isAnimating)
-
-
-
     }
 }
