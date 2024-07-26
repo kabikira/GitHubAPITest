@@ -35,7 +35,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
     }
 
-    @objc private func searchButtonTapped() {
+    @objc func searchButtonTapped() {
         guard let username = searchTextField.text, !username.isEmpty else {
             print("Username is empty")
             return

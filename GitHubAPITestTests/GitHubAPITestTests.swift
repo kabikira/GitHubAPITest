@@ -115,45 +115,44 @@ final class ViewControllerTest: XCTestCase {
     }
 
     // サーチボタンをタップしたときのテスト
+    @MainActor
     func testSearchButtonTapped() async {
         // メインスレッドでテキストフィールドにユーザー名を入力し、サーチボタンをタップ
-        await MainActor.run {
-            vc.searchTextField.text = "testUser"
-            vc.searchButton.sendActions(for: .touchUpInside)
-        }
+        vc.searchTextField.text = "testUser"
+        vc.searchButton.sendActions(for: .touchUpInside)
+
 
         // 非同期の検索処理が完了するのを待つ
         try? await Task.sleep(nanoseconds: 500_000_000)  // 0.5 seconds
-        
 
-        await MainActor.run {
-            // ユーザー名は同じか
-            XCTAssertEqual(mockClient.requestedUser, "testUser")
-            // 返ってくるリポジトリの数
-            XCTAssertEqual(vc.gitHubRepositories.count, testRepositories.count)
 
-            // id
-            XCTAssertEqual(vc.gitHubRepositories[0].id, 1)
-            XCTAssertEqual(vc.gitHubRepositories[1].id, 2)
-            XCTAssertEqual(vc.gitHubRepositories[2].id, 3)
+        // ユーザー名は同じか
+        XCTAssertEqual(mockClient.requestedUser, "testUser")
+        // 返ってくるリポジトリの数
+        XCTAssertEqual(vc.gitHubRepositories.count, testRepositories.count)
 
-            // name
-            XCTAssertEqual(vc.gitHubRepositories[0].name, "Repo1")
-            XCTAssertEqual(vc.gitHubRepositories[1].name, "Repo2")
-            XCTAssertEqual(vc.gitHubRepositories[2].name, "Repo3")
+        // id
+        XCTAssertEqual(vc.gitHubRepositories[0].id, 1)
+        XCTAssertEqual(vc.gitHubRepositories[1].id, 2)
+        XCTAssertEqual(vc.gitHubRepositories[2].id, 3)
 
-            // repositoryUrl
-            XCTAssertEqual(vc.gitHubRepositories[0].repositoryUrl, "https://github.com/repo1")
-            XCTAssertEqual(vc.gitHubRepositories[1].repositoryUrl, "https://github.com/repo2")
-            XCTAssertEqual(vc.gitHubRepositories[2].repositoryUrl, "https://github.com/repo3")
+        // name
+        XCTAssertEqual(vc.gitHubRepositories[0].name, "Repo1")
+        XCTAssertEqual(vc.gitHubRepositories[1].name, "Repo2")
+        XCTAssertEqual(vc.gitHubRepositories[2].name, "Repo3")
 
-            // star
-            XCTAssertEqual(vc.gitHubRepositories[0].star, 100)
-            XCTAssertEqual(vc.gitHubRepositories[1].star, 150)
-            XCTAssertEqual(vc.gitHubRepositories[2].star, 0)
+        // repositoryUrl
+        XCTAssertEqual(vc.gitHubRepositories[0].repositoryUrl, "https://github.com/repo1")
+        XCTAssertEqual(vc.gitHubRepositories[1].repositoryUrl, "https://github.com/repo2")
+        XCTAssertEqual(vc.gitHubRepositories[2].repositoryUrl, "https://github.com/repo3")
 
-            // インジケータが停止していることを確認
-            XCTAssertFalse(vc.indicator.isAnimating)
-        }
+        // star
+        XCTAssertEqual(vc.gitHubRepositories[0].star, 100)
+        XCTAssertEqual(vc.gitHubRepositories[1].star, 150)
+        XCTAssertEqual(vc.gitHubRepositories[2].star, 0)
+
+        // インジケータが停止していることを確認
+        XCTAssertFalse(vc.indicator.isAnimating)
+
     }
 }
